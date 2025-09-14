@@ -1,17 +1,30 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
+import Constants from 'expo-constants';
+
+// Get Firebase config from Expo constants
+const extra = Constants.expoConfig?.extra || {};
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.FIREBASE_APP_ID,
-  measurementId: process.env.FIREBASE_MEASUREMENT_ID
+  apiKey: extra.FIREBASE_API_KEY,
+  authDomain: extra.FIREBASE_AUTH_DOMAIN,
+  projectId: extra.FIREBASE_PROJECT_ID,
+  storageBucket: extra.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: extra.FIREBASE_MESSAGING_SENDER_ID,
+  appId: extra.FIREBASE_APP_ID,
+  measurementId: extra.FIREBASE_MEASUREMENT_ID
 };
+
+// Check if config is valid
+const isConfigValid = Object.values(firebaseConfig).every(value => 
+  value && !value.includes('undefined') && !value.includes('your-')
+);
+
+if (!isConfigValid) {
+  console.error('Invalid Firebase configuration. Please check your environment variables.');
+}
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
