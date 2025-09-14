@@ -3,14 +3,16 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
-    "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "lint": "expo lint",
     "build:web": "expo export:web",
-    "deploy:netlify": "npm run build:web && netlify deploy --dir=dist --prod"
+    "deploy:netlify": "npm run build:web && netlify deploy --dir=dist --prod",
+      "build": "expo export --platform web",
+    "start": "npx serve dist -s",
+    "render-build": "npm install && npm run build"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.2",
